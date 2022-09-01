@@ -32,6 +32,10 @@ function App() {
                   <img src={beer.image_url} alt={`Picture of ${beer.name}`} />
                 </div>
               )} */}
+              <p style={{ textAlign: 'center' }}>
+                {/* Remove <twitterHandle> - which is may be a broken link */}
+                By {beer.contributed_by.replace(/<[a-zA-Z]+>/, '')}
+              </p>
               <p>{beer.description}</p>
               <h4>Food pairing</h4>
               <table>
@@ -78,6 +82,7 @@ function App() {
               </table>
 
               <h3 style={{ textAlign: 'center' }}>Ingredients</h3>
+              <p>{beer.brewers_tips}</p>
               <h4>Yeast</h4>
               <table>
                 <tbody>
@@ -115,10 +120,7 @@ function App() {
                     return (
                       <tr key={Hash(hop.name + hop.amount.value)}>
                         <th scope="row">{hop.name}</th>
-                        <td>
-                          {hop.amount.value}
-                          {hop.amount.unit}
-                        </td>
+                        <td>{hop.amount.value} g</td>
                         <td>{hop.add}</td>
                         <td>{hop.attribute}</td>
                       </tr>
