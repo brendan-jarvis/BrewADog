@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container h1 {
+  font-size: 5em;
+}
+
+.container h1,
+h2 {
+  font-family: 'Amatic SC', cursive;
+  text-align: center;
+}
+
+.container h3 {
+  font-family: 'Aboreto', cursive;
+}
+
+.container img {
+  /* 200px by 400px seems good */
+  max-width: 200px;
+  max-height: 400px;
+}
