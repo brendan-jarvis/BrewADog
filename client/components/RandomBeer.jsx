@@ -108,7 +108,17 @@ function RandomBeer() {
                   {beer.ingredients.hops.map((hop) => {
                     return (
                       <tr key={Hash(hop.name + hop.amount.value)}>
-                        <th scope="row">{hop.name}</th>
+                        <th scope="row">
+                          <a
+                            href={`https://beermaverick.com/hop/${hop.name
+                              .replace('-extract', '')
+                              .replace(/\s+/g, '-')
+                              .toLowerCase()}/`}
+                            style={{ color: 'black' }}
+                          >
+                            {hop.name}
+                          </a>
+                        </th>
                         <td>{hop.amount.value} g</td>
                         <td>{hop.add}</td>
                         <td>{hop.attribute}</td>
@@ -132,7 +142,11 @@ function RandomBeer() {
                         <td>
                           {mash.temp.value} {mash.temp.unit}
                         </td>
-                        {mash.duration ? <td>{mash.duration}</td> : <td>60</td>}
+                        {mash.duration ? (
+                          <td>{mash.duration} min</td>
+                        ) : (
+                          <td>60 min</td>
+                        )}
                       </tr>
                     )
                   })}
