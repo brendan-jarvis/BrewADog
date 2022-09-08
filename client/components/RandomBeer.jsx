@@ -28,20 +28,34 @@ function RandomBeer() {
               <p>{beer.description}</p>
               <h4>Food pairing</h4>
               <table>
-                {beer.food_pairing.map((food) => (
-                  <td key={Hash(food)}>{food}</td>
-                ))}
+                <tbody>
+                  <tr>
+                    {beer.food_pairing.map((food) => (
+                      <td key={Hash(food)}>{food}</td>
+                    ))}
+                  </tr>
+                </tbody>
               </table>
             </div>
             {/* TODO Fix formatting and layout of these tables */}
             <div className="tables-container">
               <table>
                 <tr>
-                  <th>ABV</th>
-                  <th>IBU</th>
-                  <th>EBC</th>
-                  <th>SRM</th>
-                  <th>pH</th>
+                  <th>
+                    <abbr title="Alcohol By Volume">ABV</abbr>
+                  </th>
+                  <th>
+                    <abbr title="International Bitterness Units">IBU</abbr>
+                  </th>
+                  <th>
+                    <abbr title="European Brewery Convention">EBC</abbr>
+                  </th>
+                  <th>
+                    <abbr title="Standard Reference Method">SRM</abbr>
+                  </th>
+                  <th>
+                    <abbr title="Potential of Hydrogen">pH</abbr>
+                  </th>
                   <th>Attenuation level</th>
                 </tr>
                 <tr>
@@ -53,8 +67,12 @@ function RandomBeer() {
                   <td>{beer.attenuation_level}%</td>
                 </tr>
                 <tr>
-                  <th>Target OG</th>
-                  <th>Target FG</th>
+                  <th>
+                    Target <abbr title="Original Gravity">OG</abbr>
+                  </th>
+                  <th>
+                    Target <abbr title="Final Gravity">FG</abbr>
+                  </th>
                   <th>Boil Volume</th>
                   <th>Final Volume</th>
                 </tr>
@@ -70,17 +88,19 @@ function RandomBeer() {
                 </tr>
               </table>
 
-              <h3 style={{ textAlign: 'center' }}>Ingredients</h3>
+              <h3 className="centered-text">Ingredients</h3>
               <p>{beer.brewers_tips}</p>
-              <h4>Yeast</h4>
+              <h4 className="centered-text">Yeast</h4>
               <table>
                 <tbody>
-                  <th scope="row">Yeast</th>
-                  <td>{beer.ingredients.yeast}</td>
+                  <tr>
+                    <th scope="row">Yeast</th>
+                    <td>{beer.ingredients.yeast}</td>
+                  </tr>
                 </tbody>
               </table>
 
-              <h4>Malt</h4>
+              <h4 className="centered-text">Malt</h4>
               <table>
                 <tbody>
                   {beer.ingredients.malt.map((malt) => {
@@ -96,13 +116,15 @@ function RandomBeer() {
                 </tbody>
               </table>
 
-              <h4>Hops</h4>
+              <h4 className="centered-text">Hops</h4>
               <table>
                 <thead>
-                  <th>Name</th>
-                  <th>Grams</th>
-                  <th>Add</th>
-                  <th>Attribute</th>
+                  <tr>
+                    <th>Name</th>
+                    <th>Grams</th>
+                    <th>Add</th>
+                    <th>Attribute</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {beer.ingredients.hops.map((hop) => {
@@ -128,9 +150,13 @@ function RandomBeer() {
                 </tbody>
               </table>
 
-              <h4>Methods/Timings</h4>
+              <h4 className="centered-text">Methods/Timings</h4>
               <table>
-                <thead>Mash Temperature</thead>
+                <thead>
+                  <tr>
+                    <h5>Mash Temperature</h5>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <th scope="col">Temperature</th>
@@ -150,14 +176,24 @@ function RandomBeer() {
                       </tr>
                     )
                   })}
-                  {beer.method.twist && (
-                    <>
-                      <th scope="row">Twist</th>
-                      <td>{beer.method.twist}</td>
-                    </>
-                  )}
                 </tbody>
               </table>
+
+              {beer.method.twist && (
+                <table>
+                  <thead>
+                    <tr>
+                      <h5>Twist</h5>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Twist</th>
+                      <td>{beer.method.twist}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         )

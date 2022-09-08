@@ -24,3 +24,7 @@ h2 {
   max-width: 200px;
   max-height: 400px;
 }
+
+.centered-text {
+  text-align: center;
+}
