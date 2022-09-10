@@ -40,52 +40,54 @@ function RandomBeer() {
             {/* TODO Fix formatting and layout of these tables */}
             <div className="tables-container">
               <table>
-                <tr>
-                  <th>
-                    <abbr title="Alcohol By Volume">ABV</abbr>
-                  </th>
-                  <th>
-                    <abbr title="International Bitterness Units">IBU</abbr>
-                  </th>
-                  <th>
-                    <abbr title="European Brewery Convention">EBC</abbr>
-                  </th>
-                  <th>
-                    <abbr title="Standard Reference Method">SRM</abbr>
-                  </th>
-                  <th>
-                    <abbr title="Potential of Hydrogen">pH</abbr>
-                  </th>
-                  <th>Attenuation level</th>
-                </tr>
-                <tr>
-                  <td>{beer.abv}%</td>
-                  <td>{beer.ibu}</td>
-                  <td>{beer.ebc}</td>
-                  <td>{beer.srm}</td>
-                  <td>{beer.ph}</td>
-                  <td>{beer.attenuation_level}%</td>
-                </tr>
-                <tr>
-                  <th>
-                    Target <abbr title="Original Gravity">OG</abbr>
-                  </th>
-                  <th>
-                    Target <abbr title="Final Gravity">FG</abbr>
-                  </th>
-                  <th>Boil Volume</th>
-                  <th>Final Volume</th>
-                </tr>
-                <tr>
-                  <td>{beer.target_og}</td>
-                  <td>{beer.target_fg}</td>
-                  <td>
-                    {beer.boil_volume.value} {beer.boil_volume.unit}
-                  </td>
-                  <td>
-                    {beer.volume.value} {beer.volume.unit}
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>
+                      <abbr title="Alcohol By Volume">ABV</abbr>
+                    </th>
+                    <th>
+                      <abbr title="International Bitterness Units">IBU</abbr>
+                    </th>
+                    <th>
+                      <abbr title="European Brewery Convention">EBC</abbr>
+                    </th>
+                    <th>
+                      <abbr title="Standard Reference Method">SRM</abbr>
+                    </th>
+                    <th>
+                      <abbr title="Potential of Hydrogen">pH</abbr>
+                    </th>
+                    <th>Attenuation level</th>
+                  </tr>
+                  <tr>
+                    <td>{beer.abv}%</td>
+                    <td>{beer.ibu}</td>
+                    <td>{beer.ebc}</td>
+                    <td>{beer.srm}</td>
+                    <td>{beer.ph}</td>
+                    <td>{beer.attenuation_level}%</td>
+                  </tr>
+                  <tr>
+                    <th>
+                      Target <abbr title="Original Gravity">OG</abbr>
+                    </th>
+                    <th>
+                      Target <abbr title="Final Gravity">FG</abbr>
+                    </th>
+                    <th>Boil Volume</th>
+                    <th>Final Volume</th>
+                  </tr>
+                  <tr>
+                    <td>{beer.target_og}</td>
+                    <td>{beer.target_fg}</td>
+                    <td>
+                      {beer.boil_volume.value} {beer.boil_volume.unit}
+                    </td>
+                    <td>
+                      {beer.volume.value} {beer.volume.unit}
+                    </td>
+                  </tr>
+                </tbody>
               </table>
 
               <h3 className="centered-text">Ingredients</h3>
@@ -129,7 +131,11 @@ function RandomBeer() {
                 <tbody>
                   {beer.ingredients.hops.map((hop) => {
                     return (
-                      <tr key={Hash(hop.name + hop.amount.value)}>
+                      <tr
+                        key={Hash(
+                          hop.name + hop.amount.value + hop.add + hop.attribute
+                        )}
+                      >
                         <th scope="row">
                           <a
                             href={`https://beermaverick.com/hop/${hop.name
@@ -154,7 +160,7 @@ function RandomBeer() {
               <table>
                 <thead>
                   <tr>
-                    <h5>Mash Temperature</h5>
+                    <th>Mash Temperature</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,7 +170,11 @@ function RandomBeer() {
                   </tr>
                   {beer.method.mash_temp.map((mash) => {
                     return (
-                      <tr key={Hash(mash)}>
+                      <tr
+                        key={Hash(
+                          mash.temp.value + mash.temp.unit + mash.duration
+                        )}
+                      >
                         <td>
                           {mash.temp.value} {mash.temp.unit}
                         </td>
@@ -183,7 +193,7 @@ function RandomBeer() {
                 <table>
                   <thead>
                     <tr>
-                      <h5>Twist</h5>
+                      <th>Twist</th>
                     </tr>
                   </thead>
                   <tbody>
