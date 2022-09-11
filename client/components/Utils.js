@@ -30,3 +30,13 @@ export function convertEBCToSRM(EBC) {
   // SRM = EBC * 0.508
   return EBC * 0.508
 }
+
+export function convertSRMtoLovibond(SRM) {
+  // °L = (SRM + 0.76)/1.3546
+  return (SRM + 0.76) / 1.3546
+}
+
+export function convertLovibondtoSRM(lovibond) {
+  // SRM = (1.3564 x °L) - 0.76
+  return 1.3564 * lovibond - 0.76
+}

@@ -1,4 +1,3 @@
-// const funcs = require('./utils')
 import * as Utils from './Utils'
 
 describe('Colour conversion functions', () => {
@@ -37,27 +36,48 @@ describe('Metric to Imperial conversion functions.', () => {
   })
 })
 
-//calculateMCU(grainWeight, grainColour, volume)
 describe('Calculate MCU and SRM.', () => {
   test('Calculate MCU returns a correct result.', () => {
     const kgGrain = 5
-    const colour = 6
+    const colour = 2
     const volumeLitres = 22.7304
 
-    // 11.0231 lbs * 4.99 lovibond / 5 gallons
-    const expected = 11.01440737682905
+    // 11.0231 lbs * 2 lovibond / 5 gallons
+    const expected = 3.671469125609683
 
     const actual = Utils.calculateMCU(kgGrain, colour, volumeLitres)
 
     expect(actual).toBe(expected)
   })
 
-  test('Calculate SRM from MCU is correct.', () => {
+  test('Calculate SRM from MCU returns a correct result.', () => {
     // 1.4922 * (MCU * 0.6859)
-    const SRM = 11.0010538
-    const expected = 11.259578344278921
+    const MCU = 3.671469125609683
+    const expected = 3.757748576632128
 
-    const actual = Utils.calculateSRM(SRM)
+    const actual = Utils.calculateSRM(MCU)
+
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('Calculate Lovibond from SRM and SRM from Lovibond.', () => {
+  test('Calculate Lovibond from SRM returns a correct result.', () => {
+    const SRM = 7
+
+    const expected = 5.728628377380776
+
+    const actual = Utils.convertSRMtoLovibond(SRM)
+
+    expect(actual).toBe(expected)
+  })
+
+  test('Calculate SRM from Lovibond returns a correct result.', () => {
+    // 1.4922 * (MCU * 0.6859)
+    const lovibond = 5.73
+    const expected = 7.012172000000001
+
+    const actual = Utils.convertLovibondtoSRM(lovibond)
 
     expect(actual).toBe(expected)
   })
