@@ -29,6 +29,14 @@ h2 {
   text-align: center;
 }
 
+/* Container for settings switches */
+.settings {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; 
+  align-items: center;
+}
+
 /* Toggle switch */
 /* The switch - the box around the slider */
 .switch {
@@ -37,6 +45,7 @@ h2 {
   width: 60px;
   height: 34px;
   margin-bottom: 4.5rem; /* Adds margin to the bottom of vetically-displayed switches */
+  margin-right: 3rem;
 }
 
 /* Hide default HTML checkbox */

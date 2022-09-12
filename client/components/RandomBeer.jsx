@@ -17,36 +17,48 @@ function RandomBeer() {
   const [imperialTemp, setImperialTemp] = useState(false)
   const [imperialUnits, setImperialUnits] = useState(false)
   const [ounces, setOunces] = useState(false)
+  const [kcal, setKcal] = useState(false)
 
   return (
     <div className="container">
-      <label className="switch">
-        <input
-          type="checkbox"
-          checked={imperialTemp}
-          onChange={() => setImperialTemp(!imperialTemp)}
-        />
-        <span className="slider round"></span>
-        Fahrenheit
-      </label>
-      <label className="switch">
-        <input
-          type="checkbox"
-          checked={imperialUnits}
-          onChange={() => setImperialUnits(!imperialUnits)}
-        />
-        <span className="slider round"></span>
-        Imperial Units
-      </label>
-      <label className="switch">
-        <input
-          type="checkbox"
-          checked={ounces}
-          onChange={() => setOunces(!ounces)}
-        />
-        <span className="slider round"></span>
-        Ounces
-      </label>
+      <div className="settings">
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={imperialTemp}
+            onChange={() => setImperialTemp(!imperialTemp)}
+          />
+          <span className="slider round"></span>
+          Fahrenheit
+        </label>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={imperialUnits}
+            onChange={() => setImperialUnits(!imperialUnits)}
+          />
+          <span className="slider round"></span>
+          Imperial Units
+        </label>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={ounces}
+            onChange={() => setOunces(!ounces)}
+          />
+          <span className="slider round"></span>
+          Ounces
+        </label>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={kcal}
+            onChange={() => setKcal(!kcal)}
+          />
+          <span className="slider round"></span>
+          Calories
+        </label>
+      </div>
       {randomBeer?.map((beer) => {
         const calories = calcCalories(
           beer.target_og / 1000,
@@ -129,7 +141,11 @@ function RandomBeer() {
                     </th>
                     <th>Boil Volume</th>
                     <th>Final Volume</th>
-                    <th>Energy (12 oz or 355mL)</th>
+                    {imperialUnits ? (
+                      <th>Energy (12 oz)</th>
+                    ) : (
+                      <th>Energy (355mL)</th>
+                    )}
                   </tr>
                   <tr>
                     <td>{beer.target_og / 1000} SG</td>
@@ -159,14 +175,19 @@ function RandomBeer() {
                         {beer.volume.value} {beer.volume.unit}
                       </td>
                     )}
-                    <td>
-                      {calories.toLocaleString({ maximumFractionDigits: 2 })}
-                      {' kcal / '}
-                      {kilojoules.toLocaleString({
-                        maximumFractionDigits: 2,
-                      })}{' '}
-                      kJ
-                    </td>
+                    {kcal ? (
+                      <td>
+                        {calories.toLocaleString({ maximumFractionDigits: 2 })}
+                        {' kcal'}
+                      </td>
+                    ) : (
+                      <td>
+                        {kilojoules.toLocaleString({
+                          maximumFractionDigits: 2,
+                        })}{' '}
+                        kJ
+                      </td>
+                    )}
                   </tr>
                 </tbody>
               </table>

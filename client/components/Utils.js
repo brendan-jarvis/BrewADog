@@ -57,7 +57,6 @@ export function SRMToRGBCSS(srm) {
 
 // http://beersmith.com/blog/2011/02/04/counting-calories-in-your-homebrewed-beer/
 // 12oz or 355 mL beer
-
 export const caloriesAlc = (og, fg) => 1881.22 * fg * ((og - fg) / (1.775 - og))
 export const caloriesExt = (og, fg) =>
   3550.0 * fg * (0.1808 * og + 0.8192 * fg - 1.0004)
