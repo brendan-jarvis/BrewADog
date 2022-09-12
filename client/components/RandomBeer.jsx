@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import * as Utils from './Utils'
+
 import Hash from 'hash-string'
 
 function RandomBeer() {
@@ -51,7 +53,7 @@ function RandomBeer() {
                     <th>
                       <abbr title="European Brewery Convention">EBC</abbr>
                     </th>
-                    <th>
+                    <th colspan="2">
                       <abbr title="Standard Reference Method">SRM</abbr>
                     </th>
                     <th>
@@ -64,6 +66,12 @@ function RandomBeer() {
                     <td>{beer.ibu}</td>
                     <td>{beer.ebc}</td>
                     <td>{beer.srm}</td>
+                    <td
+                      style={{
+                        width: '100px',
+                        backgroundColor: Utils.SRMToRGBCSS(beer.srm),
+                      }}
+                    ></td>
                     <td>{beer.ph}</td>
                     <td>{beer.attenuation_level}%</td>
                   </tr>

@@ -40,3 +40,17 @@ export function convertLovibondtoSRM(lovibond) {
   // SRM = (1.3564 x °L) - 0.76
   return 1.3564 * lovibond - 0.76
 }
+
+export function SRMToRgb(srm) {
+  const r = Math.round(Math.min(255, Math.max(0, 255 * Math.pow(0.975, srm))))
+  const g = Math.round(Math.min(255, Math.max(0, 255 * Math.pow(0.88, srm))))
+  const b = Math.round(Math.min(255, Math.max(0, 255 * Math.pow(0.7, srm))))
+
+  return { r, g, b }
+}
+
+export function SRMToRGBCSS(srm) {
+  const color = SRMToRgb(srm)
+
+  return `rgb(${color.r}, ${color.g}, ${color.b})`
+}
