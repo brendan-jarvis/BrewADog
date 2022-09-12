@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
-import beers from './beers'
+import randomBeer from './randomBeer'
+import errorMessage from './errorMessage'
 
-export default combineReducers({ beers })
+export default combineReducers({ randomBeer, errorMessage })

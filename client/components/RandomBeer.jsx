@@ -1,16 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import * as Utils from './Utils'
+import {
+  SRMToRGBCSS,
+  calcCalories,
+  convertCToF,
+  convertLitresToGallons,
+  convertKilogramsToPounds,
+  convertGToOz,
+} from './Utils'
 
 import Hash from 'hash-string'
 
 function RandomBeer() {
-  const randomBeer = useSelector((state) => state.beers)
+  const randomBeer = useSelector((state) => state.randomBeer)
+  const [imperialTemp, setImperialTemp] = useState(false)
+  const [imperialUnits, setImperialUnits] = useState(false)
+  const [ounces, setOunces] = useState(false)
 
   return (
     <div className="container">
+      <label className="switch">
+        <input
+          type="checkbox"
+          checked={imperialTemp}
+          onChange={() => setImperialTemp(!imperialTemp)}
+        />
+        <span className="slider round"></span>
+        Fahrenheit
+      </label>
+      <label className="switch">
+        <input
+          type="checkbox"
+          checked={imperialUnits}
+          onChange={() => setImperialUnits(!imperialUnits)}
+        />
+        <span className="slider round"></span>
+        Imperial Units
+      </label>
+      <label className="switch">
+        <input
+          type="checkbox"
+          checked={ounces}
+          onChange={() => setOunces(!ounces)}
+        />
+        <span className="slider round"></span>
+        Ounces
+      </label>
       {randomBeer?.map((beer) => {
+        const calories = calcCalories(
+          beer.target_og / 1000,
+          beer.target_fg / 1000
+        )
+        const kilojoules = calories * 4.18
+
         return (
           <div key={Hash(beer)}>
             <div className="container-header">
@@ -47,13 +90,11 @@ function RandomBeer() {
                     <th>
                       <abbr title="Alcohol By Volume">ABV</abbr>
                     </th>
-                    <th>
-                      <abbr title="International Bitterness Units">IBU</abbr>
-                    </th>
+
                     <th>
                       <abbr title="European Brewery Convention">EBC</abbr>
                     </th>
-                    <th colspan="2">
+                    <th colSpan="2">
                       <abbr title="Standard Reference Method">SRM</abbr>
                     </th>
                     <th>
@@ -63,13 +104,13 @@ function RandomBeer() {
                   </tr>
                   <tr>
                     <td>{beer.abv}%</td>
-                    <td>{beer.ibu}</td>
+
                     <td>{beer.ebc}</td>
                     <td>{beer.srm}</td>
                     <td
                       style={{
                         width: '100px',
-                        backgroundColor: Utils.SRMToRGBCSS(beer.srm),
+                        backgroundColor: SRMToRGBCSS(beer.srm),
                       }}
                     ></td>
                     <td>{beer.ph}</td>
@@ -82,17 +123,49 @@ function RandomBeer() {
                     <th>
                       Target <abbr title="Final Gravity">FG</abbr>
                     </th>
+                    <th>
+                      Bitterness (
+                      <abbr title="International Bitterness Units">IBU</abbr>)
+                    </th>
                     <th>Boil Volume</th>
                     <th>Final Volume</th>
+                    <th>Energy (12 oz or 355mL)</th>
                   </tr>
                   <tr>
-                    <td>{beer.target_og}</td>
-                    <td>{beer.target_fg}</td>
+                    <td>{beer.target_og / 1000} SG</td>
+                    <td>{beer.target_fg / 1000} SG</td>
+                    <td>{beer.ibu}</td>
+                    {imperialUnits ? (
+                      <td>
+                        {convertLitresToGallons(
+                          beer.boil_volume.value
+                        ).toLocaleString({ maximumFractionDigits: 2 })}{' '}
+                        gallons
+                      </td>
+                    ) : (
+                      <td>
+                        {beer.boil_volume.value} {beer.boil_volume.unit}
+                      </td>
+                    )}
+                    {imperialUnits ? (
+                      <td>
+                        {convertLitresToGallons(
+                          beer.volume.value
+                        ).toLocaleString({ maximumFractionDigits: 2 })}{' '}
+                        gallons
+                      </td>
+                    ) : (
+                      <td>
+                        {beer.volume.value} {beer.volume.unit}
+                      </td>
+                    )}
                     <td>
-                      {beer.boil_volume.value} {beer.boil_volume.unit}
-                    </td>
-                    <td>
-                      {beer.volume.value} {beer.volume.unit}
+                      {calories.toLocaleString({ maximumFractionDigits: 2 })}
+                      {' kcal / '}
+                      {kilojoules.toLocaleString({
+                        maximumFractionDigits: 2,
+                      })}{' '}
+                      kJ
                     </td>
                   </tr>
                 </tbody>
@@ -117,9 +190,20 @@ function RandomBeer() {
                     return (
                       <tr key={Hash(malt.name + malt.amount.value)}>
                         <th scope="col">{malt.name}</th>
-                        <td>
-                          {malt.amount.value} {malt.amount.unit}
-                        </td>
+                        {imperialUnits ? (
+                          <td>
+                            {convertKilogramsToPounds(
+                              malt.amount.value
+                            ).toLocaleString({
+                              maximumFractionDigits: 2,
+                            })}{' '}
+                            pounds
+                          </td>
+                        ) : (
+                          <td>
+                            {malt.amount.value} {malt.amount.unit}
+                          </td>
+                        )}
                       </tr>
                     )
                   })}
@@ -155,7 +239,17 @@ function RandomBeer() {
                             {hop.name}
                           </a>
                         </th>
-                        <td>{hop.amount.value} g</td>
+                        {ounces ? (
+                          <td>
+                            {convertGToOz(hop.amount.value).toLocaleString({
+                              maximumFractionDigits: 2,
+                            })}{' '}
+                            oz
+                          </td>
+                        ) : (
+                          <td>{hop.amount.value} g</td>
+                        )}
+
                         <td>{hop.add}</td>
                         <td>{hop.attribute}</td>
                       </tr>
@@ -183,9 +277,11 @@ function RandomBeer() {
                           mash.temp.value + mash.temp.unit + mash.duration
                         )}
                       >
-                        <td>
-                          {mash.temp.value} {mash.temp.unit}
-                        </td>
+                        {imperialTemp ? (
+                          <td>{convertCToF(mash.temp.value)} °F</td>
+                        ) : (
+                          <td>{mash.temp.value} °C</td>
+                        )}
                         {mash.duration ? (
                           <td>{mash.duration} min</td>
                         ) : (

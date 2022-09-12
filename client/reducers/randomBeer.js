@@ -1,6 +1,6 @@
 import { RECEIVE_BEER } from '../actions'
 
-function beers(state = [], action) {
+function randomBeer(state = [], action) {
   const { type, payload } = action
 
   switch (type) {
@@ -11,4 +11,4 @@ function beers(state = [], action) {
   }
 }
 
-export default beers
+export default randomBeer
