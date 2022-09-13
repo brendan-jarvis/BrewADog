@@ -5,6 +5,12 @@
   justify-content: center;
 }
 
+.container-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .container h1 {
   font-size: 5em;
 }

@@ -33,6 +33,26 @@ function RandomBeer() {
               <p>
                 <b>Yeast:</b> {beer.ingredients.yeast}
               </p>
+              {beer.srm && (
+                <div className="container-row">
+                  <p>
+                    <b>Colour: </b>
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ height: '45px' }}
+                  >
+                    <rect
+                      x="20"
+                      y="0"
+                      width="106.960718663"
+                      height="24.25"
+                      stroke="black"
+                      fill={SRMToRGBCSS(beer.srm)}
+                    />
+                  </svg>
+                </div>
+              )}
               <table>
                 <thead>
                   <tr>
