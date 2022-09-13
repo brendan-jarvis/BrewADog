@@ -7,29 +7,23 @@ import { fetchRandomBeer, searchBeerRecipes } from '../actions'
 
 // Components
 import RandomBeer from './RandomBeer'
+import SearchResults from './SearchResults'
 
 function Form() {
   const dispatch = useDispatch()
 
-  const [abv, setAbv] = useState([0, 56])
-  const [ibu, setIbu] = useState([0, 1158])
-  const [ebc, setEbc] = useState([0, 601])
-  const [yeast, setYeast] = useState('')
-  const [malt, setMalt] = useState('')
-  const [hops, setHops] = useState('')
-  const [name, setName] = useState('')
-
-  function abvText(abv) {
-    return `${abv}%`
-  }
-
-  function ibuText(ibu) {
-    return `${ibu}`
-  }
-
-  function ebcText(ebc) {
-    return `${ebc}`
-  }
+  // abv range 0 to 56
+  // ibu range 0 to 1158
+  // ebc range 0 to 601
+  const [query, setQuery] = useState({
+    abv: [0, 30],
+    ibu: [0, 150],
+    ebc: [0, 50],
+    hops: '',
+    malt: '',
+    yeast: '',
+    search: '',
+  })
 
   const abvMarks = [
     {
@@ -124,16 +118,26 @@ function Form() {
     },
   ]
 
+  const handleChange = (evt) => {
+    // const key = evt.target.name
+
+    setQuery({
+      ...query,
+      [evt.target.name]: evt.target.value,
+    })
+  }
+
   const handleChangeAbv = (event, newValue) => {
-    setAbv(newValue)
+    // setAbv(newValue)
+    setQuery({ ...query, abv: newValue })
   }
 
   const handleChangeIbu = (event, newValue) => {
-    setIbu(newValue)
+    setQuery({ ...query, ibu: newValue })
   }
 
   const handleChangeEbc = (event, newValue) => {
-    setEbc(newValue)
+    setQuery({ ...query, ebc: newValue })
   }
 
   const handleSubmit = (e) => {
@@ -145,7 +149,7 @@ function Form() {
   const handleSearchSubmit = (e) => {
     e.preventDefault()
 
-    dispatch(searchBeerRecipes(abv, ibu, ebc, yeast, malt, hops, name))
+    dispatch(searchBeerRecipes(query))
   }
 
   return (
@@ -156,52 +160,52 @@ function Form() {
             ABV:
             <Slider
               getAriaLabel={() => 'ABV range'}
-              value={abv}
+              value={query.abv}
               min={0}
               step={1}
               max={30}
               marks={abvMarks}
               valueLabelDisplay="auto"
               onChange={handleChangeAbv}
-              getAriaValueText={abvText}
+              getAriaValueText={() => `${query.abv}%`}
             />
           </label>
           <label>
             IBU:
             <Slider
               getAriaLabel={() => 'IBU range'}
-              value={ibu}
+              value={query.ibu}
               min={0}
               step={1}
               max={150}
               marks={ibuMarks}
               valueLabelDisplay="auto"
               onChange={handleChangeIbu}
-              getAriaValueText={ibuText}
+              getAriaValueText={() => `${query.ibu}`}
             />
           </label>
           <label>
             EBC:
             <Slider
               getAriaLabel={() => 'EBC range'}
-              value={ebc}
+              value={query.ebc}
               min={0}
               step={1}
               max={50}
               marks={ebcMarks}
               valueLabelDisplay="auto"
               onChange={handleChangeEbc}
-              getAriaValueText={ebcText}
+              getAriaValueText={() => `${query.ebu}`}
             />
           </label>
           <label>
-            Name:{' '}
+            Search:{' '}
             <input
               type="text"
-              name="name"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="search"
+              id="search"
+              value={query.search}
+              onChange={handleChange}
             />
           </label>
           <label>
@@ -210,8 +214,8 @@ function Form() {
               type="text"
               name="malt"
               id="malt"
-              value={malt}
-              onChange={(e) => setMalt(e.target.value)}
+              value={query.malt}
+              onChange={handleChange}
             />
           </label>
           <label>
@@ -220,8 +224,8 @@ function Form() {
               type="text"
               name="hops"
               id="hops"
-              value={hops}
-              onChange={(e) => setHops(e.target.value)}
+              value={query.hops}
+              onChange={handleChange}
             />
           </label>
           <label>
@@ -230,8 +234,8 @@ function Form() {
               type="text"
               name="yeast"
               id="yeast"
-              value={yeast}
-              onChange={(e) => setYeast(e.target.value)}
+              value={query.yeast}
+              onChange={handleChange}
             />
           </label>
           <input
@@ -245,6 +249,7 @@ function Form() {
         <button onClick={handleSubmit}>Fetch Random Recipe</button>
       </form>
       {<RandomBeer />}
+      {<SearchResults />}
     </div>
   )
 }

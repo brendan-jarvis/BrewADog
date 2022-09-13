@@ -1,5 +1,3 @@
-import React from 'react'
-
 export function getSRMColour(props) {
   const SRMColourScale = {
     1: '#F3F993',

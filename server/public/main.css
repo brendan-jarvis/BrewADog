@@ -29,6 +29,12 @@ h2 {
   text-align: center;
 }
 
+.error {
+  color: red;
+  font-weight: 900;
+  text-align: center;
+}
+
 /* Container for settings switches */
 .settings {
   display: flex;
