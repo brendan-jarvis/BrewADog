@@ -11,6 +11,14 @@ function RandomBeer() {
   return (
     <div className="container">
       {searchResults?.map((beer) => {
+        // Remove duplicates and sort alphabetically.
+        const hops = beer.ingredients.hops.map((hop) => hop.name)
+        const uniqueHops = [...new Set(hops)].sort()
+
+        // No sort as base malt tends to come first.
+        const malts = beer.ingredients.malt.map((malt) => malt.name)
+        const uniqueMalts = [...new Set(malts)]
+
         return (
           <div key={Hash(beer.id + beer.name)}>
             <div className="container-header">
@@ -20,18 +28,22 @@ function RandomBeer() {
               <p>{beer.description}</p>
               <p>
                 <b>Malt:</b>{' '}
-                {beer.ingredients.malt.map((malt) => {
-                  return malt.name + ', '
-                })}
+                {uniqueMalts
+                  .map((malt) => {
+                    return malt
+                  })
+                  .join(', ') + '.'}
               </p>
               <p>
                 <b>Hops:</b>{' '}
-                {beer.ingredients.hops.map((hop) => {
-                  return hop.name + ', '
-                })}
+                {uniqueHops
+                  .map((hop) => {
+                    return hop
+                  })
+                  .join(', ') + '.'}
               </p>
               <p>
-                <b>Yeast:</b> {beer.ingredients.yeast}
+                <b>Yeast:</b> {beer.ingredients.yeast}.
               </p>
               {beer.srm && (
                 <div className="container-row">
