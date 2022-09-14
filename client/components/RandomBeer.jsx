@@ -23,14 +23,21 @@ function RandomBeer() {
   const [imperialUnits, setImperialUnits] = useState(false)
   const [ounces, setOunces] = useState(false)
   const [kcal, setKcal] = useState(false)
-  const [favourite, setFavourite] = useState(false)
+
+  // const favourite = useSelector((state) =>
+  //   state.recipes.find((recipe) => recipe.brewdog_id == randomBeer[0].id)
+  // )
 
   const handleFavourite = () => {
     console.log('Saving to favourites...')
-    setFavourite(() => !favourite)
     const beer = { brewdog_id: randomBeer[0].id, name: randomBeer[0].name }
 
-    dispatch(saveBeerRecipe(beer))
+    if (!favourite) {
+      dispatch(saveBeerRecipe(beer))
+    }
+    if (favourite) {
+      console.log('You have already favourited this beer. Deleting favourite.')
+    }
   }
 
   return (

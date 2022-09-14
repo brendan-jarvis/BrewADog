@@ -11,6 +11,6 @@ export async function addRecipeApi(beer) {
 }
 
 export async function delRecipeApi(id) {
-  const req = await request.delete('/api/v1/recipes' + id)
+  const req = await request.delete('/api/v1/recipes/' + id)
   return req.body
 }

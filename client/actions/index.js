@@ -1,6 +1,6 @@
 import request from 'superagent'
 
-import { addRecipeApi } from '../apis/recipeApi'
+import { getRecipesApi, delRecipeApi, addRecipeApi } from '../apis/recipeApi'
 
 export const REQUEST_BEER = 'REQUEST_BEER'
 export const RECEIVE_BEER = 'RECEIVE_BEER'
@@ -125,6 +125,12 @@ export function searchBeerRecipes(query) {
       .catch((err) => {
         dispatch(showError(err.message))
       })
+  }
+}
+
+export function getRecipes() {
+  return (dispatch) => {
+    return getRecipesApi().then((res) => dispatch(showRecipes(res)))
   }
 }
 

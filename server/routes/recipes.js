@@ -24,9 +24,9 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const beerId = req.body
+    const beerId = req.params.id
     await db.delRecipe(beerId)
     const beers = db.getRecipes()
     res.json(beers)
