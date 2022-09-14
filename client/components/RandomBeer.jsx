@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Switch, FormGroup, FormControlLabel } from '@material-ui/core'
 
 import {
   SRMToRGBCSS,
@@ -21,44 +22,52 @@ function RandomBeer() {
 
   return (
     <div className="container">
-      <div className="settings">
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={imperialTemp}
-            onChange={() => setImperialTemp(!imperialTemp)}
-          />
-          <span className="slider round"></span>
-          Fahrenheit
-        </label>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={imperialUnits}
-            onChange={() => setImperialUnits(!imperialUnits)}
-          />
-          <span className="slider round"></span>
-          Imperial Units
-        </label>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={ounces}
-            onChange={() => setOunces(!ounces)}
-          />
-          <span className="slider round"></span>
-          Ounces
-        </label>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={kcal}
-            onChange={() => setKcal(!kcal)}
-          />
-          <span className="slider round"></span>
-          Calories
-        </label>
-      </div>
+      <FormGroup row="true">
+        <FormControlLabel
+          control={
+            <Switch
+              aria-label="Fahrenheit"
+              checked={imperialTemp}
+              onChange={() => setImperialTemp(!imperialTemp)}
+              color="primary"
+            />
+          }
+          label="Fahrenheit"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              aria-label="Imperial Units"
+              checked={imperialUnits}
+              onChange={() => setImperialUnits(!imperialUnits)}
+              color="primary"
+            />
+          }
+          label="Imperial Units"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              aria-label="Ounces"
+              checked={ounces}
+              onChange={() => setOunces(!ounces)}
+              color="primary"
+            />
+          }
+          label="Ounces"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              aria-label="Calories"
+              checked={kcal}
+              onChange={() => setKcal(!kcal)}
+              color="primary"
+            />
+          }
+          label="Calories"
+        />
+      </FormGroup>
       {randomBeer?.map((beer) => {
         const calories = calcCalories(
           beer.target_og / 1000,
