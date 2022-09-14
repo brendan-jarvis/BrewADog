@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Switch, FormGroup, FormControlLabel } from '@material-ui/core'
+
+import { saveBeerRecipe } from '../actions'
 
 import {
   SRMToRGBCSS,
@@ -14,15 +16,26 @@ import {
 import Hash from 'hash-string'
 
 function RandomBeer() {
+  const dispatch = useDispatch()
+
   const randomBeer = useSelector((state) => state.randomBeer)
   const [imperialTemp, setImperialTemp] = useState(false)
   const [imperialUnits, setImperialUnits] = useState(false)
   const [ounces, setOunces] = useState(false)
   const [kcal, setKcal] = useState(false)
+  const [favourite, setFavourite] = useState(false)
+
+  const handleFavourite = () => {
+    console.log('Saving to favourites...')
+    setFavourite(() => !favourite)
+    const beer = { brewdog_id: randomBeer[0].id, name: randomBeer[0].name }
+
+    dispatch(saveBeerRecipe(beer))
+  }
 
   return (
     <div className="container">
-      <FormGroup row="true">
+      <FormGroup row={true}>
         <FormControlLabel
           control={
             <Switch
@@ -81,6 +94,21 @@ function RandomBeer() {
               <h1>
                 #{beer.id} {beer.name}
               </h1>
+              <div className="container-row add-to-favourites">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  fill={favourite ? 'red' : 'black'}
+                >
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+
+                <button className="button-primary" onClick={handleFavourite}>
+                  Save to favourites!
+                </button>
+              </div>
               <h2>{beer.tagline}</h2>
               {/* {beer.image_url && (
                 <div className="img-container">

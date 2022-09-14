@@ -1,10 +1,15 @@
 import request from 'superagent'
 
+import { addRecipeApi } from '../apis/recipeApi'
+
 export const REQUEST_BEER = 'REQUEST_BEER'
 export const RECEIVE_BEER = 'RECEIVE_BEER'
 export const RECEIVE_SEARCH = 'RECEIVE_SEARCH'
 export const SHOW_ERROR = 'SHOW_ERROR'
 export const REQUEST_SEARCH = 'REQUEST_SEARCH'
+export const SHOW_RECIPES = 'SHOW_RECIPES'
+export const SAVE_RECIPE = 'SAVE_RECIPE'
+export const DEL_RECIPE = 'DEL_RECIPE'
 
 export function requestBeer() {
   return {
@@ -36,6 +41,27 @@ export function showError(errorMessage) {
   return {
     type: SHOW_ERROR,
     payload: errorMessage,
+  }
+}
+
+export function showRecipes(recipes) {
+  return {
+    type: SHOW_RECIPES,
+    payload: recipes,
+  }
+}
+
+export function saveRecipe(beer) {
+  return {
+    type: SAVE_RECIPE,
+    payload: beer,
+  }
+}
+
+export function delRecipe(beer) {
+  return {
+    type: DEL_RECIPE,
+    payload: beer,
   }
 }
 
@@ -99,5 +125,17 @@ export function searchBeerRecipes(query) {
       .catch((err) => {
         dispatch(showError(err.message))
       })
+  }
+}
+
+export function saveBeerRecipe(beer) {
+  return (dispatch) => {
+    return addRecipeApi(beer).then((res) => dispatch(saveRecipe(res)))
+  }
+}
+
+export function deleteBeerRecipe(id) {
+  return (dispatch) => {
+    return delRecipeApi(id).then((res) => dispatch(delRecipe(res)))
   }
 }
