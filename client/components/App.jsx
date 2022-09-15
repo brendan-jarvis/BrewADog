@@ -6,11 +6,12 @@ import Favourites from './Favourites'
 
 function App() {
   return (
-    <>
+    <div className="container">
+      <h1>Brew!</h1>
       <ErrorMessage />
       <Favourites />
       <Form />
-    </>
+    </div>
   )
 }
 

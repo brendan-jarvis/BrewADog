@@ -29,15 +29,9 @@ function RandomBeer() {
   // )
 
   const handleFavourite = () => {
-    console.log('Saving to favourites...')
     const beer = { brewdog_id: randomBeer[0].id, name: randomBeer[0].name }
 
-    if (!favourite) {
-      dispatch(saveBeerRecipe(beer))
-    }
-    if (favourite) {
-      console.log('You have already favourited this beer. Deleting favourite.')
-    }
+    dispatch(saveBeerRecipe(beer))
   }
 
   return (
@@ -102,7 +96,7 @@ function RandomBeer() {
                 #{beer.id} {beer.name}
               </h1>
               <div className="container-row add-to-favourites">
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24"
                   viewBox="0 0 24 24"
@@ -110,7 +104,7 @@ function RandomBeer() {
                   fill={favourite ? 'red' : 'black'}
                 >
                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
+                </svg> */}
 
                 <button className="button-primary" onClick={handleFavourite}>
                   Save to favourites!
