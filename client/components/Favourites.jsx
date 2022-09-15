@@ -14,6 +14,7 @@ function Favourites() {
 
   const handleClick = (id) => {
     dispatch(deleteBeerRecipe(id))
+    dispatch(getRecipes())
   }
 
   return (
