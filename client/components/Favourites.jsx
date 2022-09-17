@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import Hash from 'hash-string'
 
 import { getRecipes, deleteBeerRecipe } from '../actions'
 
@@ -34,7 +35,7 @@ function Favourites() {
         <tbody>
           {favourites?.map((beer) => {
             return (
-              <tr>
+              <tr key={Hash(beer.id + beer.name)}>
                 <td>{beer.id}</td>
                 <td>{beer.brewdog_id}</td>
                 <td>{beer.name}</td>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Switch, FormGroup, FormControlLabel } from '@material-ui/core'
+import { Switch, FormGroup, FormControlLabel } from '@mui/material'
 
 import { saveBeerRecipe } from '../actions'
 

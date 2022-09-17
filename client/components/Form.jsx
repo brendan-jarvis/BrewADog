@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Slider } from '@material-ui/core'
+import { Slider } from '@mui/material'
 
 // Actions
 import { fetchRandomBeer, searchBeerRecipes } from '../actions'
